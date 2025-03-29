@@ -15,24 +15,34 @@ import {
     Visibility, 
     VisibilityOff,
     Lock,
-    Email,
-    Google,
-    Facebook
+    Email
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [recaptchaValue, setRecaptchaValue] = useState(null);
     const navigate = useNavigate();
     const theme = useTheme();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!recaptchaValue) {
+            alert('Por favor, completa el reCAPTCHA.');
+            return;
+        }
+
         // Lógica de autenticación aquí
-        console.log('Email:', email, 'Password:', password);
+        console.log('Email:', email, 'Password:', password, 'reCAPTCHA:', recaptchaValue);
         navigate('/dashboard');
+    };
+
+    const handleRecaptchaChange = (value) => {
+        setRecaptchaValue(value);
     };
 
     return (
@@ -150,24 +160,12 @@ const LoginPage = () => {
                             }}
                         />
 
-                        <Box sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            mb: 3
-                        }}>
-                            <Link 
-                                href="#" 
-                                underline="hover" 
-                                sx={{ 
-                                    color: '#1976d2',
-                                    fontWeight: 500,
-                                    '&:hover': {
-                                        color: '#0d47a1'
-                                    }
-                                }}
-                            >
-                                ¿Olvidaste tu contraseña?
-                            </Link>
+                        {/* reCAPTCHA */}
+                        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+                            <ReCAPTCHA
+                                sitekey="6LdjUQMrAAAAAJCrgyyw4a05uAI3pUF1ibOiwXte" 
+                                onChange={handleRecaptchaChange}
+                            />
                         </Box>
 
                         <Button
@@ -193,17 +191,6 @@ const LoginPage = () => {
                         >
                             Iniciar Sesión
                         </Button>
-
-                        <Box sx={{
-                            display: 'flex',
-                            gap: 2,
-                            mb: 3
-                        }}>
-                          
-                           
-                        </Box>
-
-                        
                     </Box>
                 </Box>
             </Container>
