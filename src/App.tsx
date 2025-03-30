@@ -1,9 +1,10 @@
 // src/App.tsx
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LoginPage from '../LoginPage';
 import HomePage from './pages/HomePage';
-import Nom035Form from './pages/Nom035Form'; // Importa el nuevo componente
+import LoginPage from '../LoginPage';
+import Nom035Form from './pages/Nom035Form';
+import ProfilePage from './pages/ProfilePage'; 
 import theme from './styles/theme';
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/nom035" element={<Nom035Form />} /> {/* Nueva ruta */}
+          <Route path="/nom035" element={<Nom035Form />} />
+          <Route path="/profilepage" element={<ProfilePage />} /> 
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
